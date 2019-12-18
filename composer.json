@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MilesChou\\Markdown\\": "src"
+            "MilesChou\\Docusema\\": "src"
         }
     },
     "autoload-dev": {
