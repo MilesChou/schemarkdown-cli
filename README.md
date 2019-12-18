@@ -1,8 +1,6 @@
 # Docusema
 
-[![Build Status][travis-svg]][travis-link]
+[![Build Status](https://travis-ci.com/MilesChou/docusema.svg?branch=master)](https://travis-ci.com/MilesChou/docusema)
+[![codecov](https://codecov.io/gh/MilesChou/docusema/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/docusema)
 
 The Schema docs generator.
-
-[travis-svg]: https://travis-ci.com/MilesChou/markdown.svg?branch=master
-[travis-link]: https://travis-ci.com/MilesChou/markdown

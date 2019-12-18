@@ -13,6 +13,9 @@ script:
   - make test
   - make analyse
 
+after_success:
+  - if [[ "7.3" == "${TRAVIS_PHP_VERSION}" ]]; then bash <(curl -s https://codecov.io/bash) ; fi
+
 cache:
   directories:
     - $HOME/.composer/cache/files
