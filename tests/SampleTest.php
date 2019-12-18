@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use MilesChou\Template\Sample;
+use MilesChou\Docusema\Sample;
 use PHPUnit\Framework\TestCase;
 
 class SampleTest extends TestCase

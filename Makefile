@@ -19,11 +19,7 @@ check:
 	php vendor/bin/phpcs
 
 test: clean check
-ifeq ($(PHP_MAJOR_VERSION), 7)
 	phpdbg -qrr vendor/bin/phpunit
-else
-	php vendor/bin/phpunit
-endif
 
 analyse:
 	php vendor/bin/phpstan analyse src tests --level=max

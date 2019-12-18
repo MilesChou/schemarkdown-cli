@@ -1,10 +1,10 @@
 {
-    "name": "mileschou/composer-template",
-    "description": "The template for create Composer project",
-    "type": "library",
+    "name": "mileschou/docusema",
+    "description": "The Schema docs generator",
+    "type": "project",
     "license": "MIT",
     "keywords": [
-        "template"
+        "markdown"
     ],
     "authors": [
         {
@@ -14,16 +14,17 @@
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.2",
+        "illuminate/database": "^6"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.11.8",
-        "phpunit/phpunit": "^7 | ^8",
+        "phpunit/phpunit": "^8",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
-            "MilesChou\\Template\\": "src"
+            "MilesChou\\Markdown\\": "src"
         }
     },
     "autoload-dev": {
