@@ -1,0 +1,20 @@
+os: linux
+dist: xenial
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+install:
+  - composer install --prefer-dist
+
+script:
+  - make test
+  - make analyse
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+    - vendor
