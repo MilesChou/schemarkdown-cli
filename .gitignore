@@ -42,3 +42,6 @@ Desktop.ini
 # Artifacts files
 /build
 /.phpunit.result.cache
+
+# Tesing files
+/tests/Fixture/sqlite.db

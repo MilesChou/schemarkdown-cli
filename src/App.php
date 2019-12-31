@@ -3,6 +3,7 @@
 namespace MilesChou\Docusema;
 
 use Illuminate\Container\Container;
+use MilesChou\Docusema\Commands\GenerateCommand;
 use Symfony\Component\Console\Application;
 
 class App extends Application
@@ -16,6 +17,10 @@ class App extends Application
         $container = Container::getInstance();
 
         $this->bootstrap($container);
+
+        $this->addCommands([
+            new GenerateCommand(),
+        ]);
     }
 
     public function bootstrap(Container $container): void

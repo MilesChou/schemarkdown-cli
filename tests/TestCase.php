@@ -38,11 +38,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     protected function createContainer(): Container
     {
-        $container = new Container();
-
-        Container::setInstance($container);
-
-        return $container;
+        return Container::getInstance();
     }
 
     /**

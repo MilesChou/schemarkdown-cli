@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests;
+namespace Tests\Docusema;
 
 use MilesChou\Docusema\App;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Tests\TestCase;
 
 class AppTest extends TestCase
 {

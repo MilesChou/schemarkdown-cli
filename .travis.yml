@@ -6,12 +6,26 @@ php:
   - 7.2
   - 7.3
 
+services:
+  - mysql
+  - postgresql
+
+before_install:
+  # Prepare MySQL schema
+  - mysql < ./tests/Fixtures/mysql.sql
+  - mysql -e "SET PASSWORD = PASSWORD('password');"
+  # Prepare Sqlite schema
+  - sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql
+  # Prepare postgresql
+  - psql -U postgres -d postgres -f tests/Fixtures/postgres.sql
+
 install:
   - composer install --prefer-dist
 
 script:
   - make test
   - make analyse
+  - php bin/docusema.php generate --config-file=tests/Fixtures/database.php
 
 after_success:
   - if [[ "7.3" == "${TRAVIS_PHP_VERSION}" ]]; then bash <(curl -s https://codecov.io/bash) ; fi

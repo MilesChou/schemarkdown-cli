@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    hostname: mysql
+    volumes:
+      - ./tests/Fixtures/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+  postgres:
+    image: postgres:10-alpine
+    container_name: postgres
+    hostname: postgres
+    volumes:
+      - ./tests/Fixtures/postgres.sql:/docker-entrypoint-initdb.d/postgres.sql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
