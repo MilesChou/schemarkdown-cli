@@ -8,14 +8,27 @@ use Symfony\Component\Console\Application;
 
 class App extends Application
 {
+    /**
+     * @var Container
+     */
+    private $container;
+
     public function __construct(Container $container)
     {
-        $version = 'dev-master';
+        parent::__construct('Docusema', 'dev-master');
 
-        parent::__construct('Docusema', $version);
+        $this->container = $container;
 
         $this->addCommands([
             new GenerateCommand($container),
         ]);
+    }
+
+    /**
+     * @return Container
+     */
+    public function getContainer(): Container
+    {
+        return $this->container;
     }
 }

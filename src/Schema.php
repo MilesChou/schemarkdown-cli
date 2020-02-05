@@ -3,30 +3,61 @@
 namespace MilesChou\Docusema;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
-use Illuminate\Database\Connection;
+use Doctrine\DBAL\Schema\Column;
+use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Table;
 
 class Schema
 {
     /**
-     * @var AbstractSchemaManager
+     * @var string
      */
-    private $schema;
+    private $database;
 
     /**
-     * @param Connection $connection
+     * @var Table
      */
-    public function __construct(Connection $connection)
-    {
-        $doctrineConnection = $connection->getDoctrineConnection();
+    private $table;
 
-        $this->schema = $doctrineConnection->getSchemaManager();
+    /**
+     * @param Table $table
+     * @param string $database
+     */
+    public function __construct(Table $table, string $database)
+    {
+        $this->table = $table;
+        $this->database = $database;
+    }
+
+    public function comment(): string
+    {
+        // Workaround for PHP 7.1
+        return $this->table->hasOption('comment') ? $this->table->getOption('comment') : '';
     }
 
     /**
-     * @return mixed
+     * @return Column[]
      */
-    public function getTables()
+    public function columns(): iterable
     {
-        return $this->schema->listTableNames();
+        return $this->table->getColumns();
+    }
+
+    public function database(): string
+    {
+        return $this->database;
+    }
+
+    /**
+     * @return Index[]
+     */
+    public function indexes(): iterable
+    {
+        return $this->table->getIndexes();
+    }
+
+    public function table(): string
+    {
+        return $this->table->getName();
     }
 }

@@ -4,7 +4,9 @@ namespace MilesChou\Docusema\Commands;
 
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\View;
 use MilesChou\Docusema\Commands\Concerns\DatabaseConnection;
+use MilesChou\Docusema\Schema;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -54,9 +56,18 @@ class GenerateCommand extends Command
         /** @var DatabaseManager $databaseManager */
         $databaseManager = $this->container->get('db');
 
-        $schema = $databaseManager->connection('test_mysql')
+        $databaseConnection = $databaseManager->connection('test_mysql');
+        $schemaManager = $databaseConnection
             ->getDoctrineConnection()
             ->getSchemaManager();
+
+        echo View::make('table', [
+            'schema' => new Schema(
+                $schemaManager->listTableDetails('test_basic'),
+                $databaseConnection->getDatabaseName()
+            ),
+        ])
+            ->render();
 
         return 0;
     }
