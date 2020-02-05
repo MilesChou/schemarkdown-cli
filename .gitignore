@@ -41,6 +41,7 @@ Desktop.ini
 
 # Artifacts files
 /build
+/generated
 /.phpunit.result.cache
 
 # Tesing files

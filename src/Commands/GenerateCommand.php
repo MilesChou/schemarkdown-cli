@@ -4,9 +4,9 @@ namespace MilesChou\Docusema\Commands;
 
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Support\Facades\View;
+use MilesChou\Docusema\CodeBuilder;
+use MilesChou\Docusema\CodeWriter;
 use MilesChou\Docusema\Commands\Concerns\DatabaseConnection;
-use MilesChou\Docusema\Schema;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -40,7 +40,7 @@ class GenerateCommand extends Command
             ->setDescription('Generate Markdown')
             ->addOption('--config-file', null, InputOption::VALUE_REQUIRED, 'Config file', 'config/database.php')
             ->addOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build', null)
-            ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'build');
+            ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'generated');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -56,18 +56,9 @@ class GenerateCommand extends Command
         /** @var DatabaseManager $databaseManager */
         $databaseManager = $this->container->get('db');
 
-        $databaseConnection = $databaseManager->connection('test_mysql');
-        $schemaManager = $databaseConnection
-            ->getDoctrineConnection()
-            ->getSchemaManager();
+        $code = (new CodeBuilder($this->container, $databaseManager))->build();
 
-        echo View::make('table', [
-            'schema' => new Schema(
-                $schemaManager->listTableDetails('test_basic'),
-                $databaseConnection->getDatabaseName()
-            ),
-        ])
-            ->render();
+        (new CodeWriter())->generate($code, $outputDir);
 
         return 0;
     }
