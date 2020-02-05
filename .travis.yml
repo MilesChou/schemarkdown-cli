@@ -47,7 +47,7 @@ cache:
 
 deploy:
   provider: releases
-  api_key: ${GITHUB_ACCESS_TOKEN}
+  token: ${GITHUB_ACCESS_TOKEN}
   file: docusema.phar
   skip_cleanup: true
   on:
