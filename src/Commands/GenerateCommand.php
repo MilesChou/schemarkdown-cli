@@ -45,6 +45,8 @@ class GenerateCommand extends Command
         $manager = Container::getInstance()->get('db');
 
         $schema = new Schema($manager->getConnection('test_mysql'));
+
+        return 0;
     }
 
     /**
