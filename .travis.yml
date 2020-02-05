@@ -15,7 +15,7 @@ services:
 branches:
   only:
     - master
-    - /^\d+\.\d+\.\d+$/
+    - /^v\d+\.\d+\.\d+$/
 
 before_install:
   # Prepare MySQL schema
