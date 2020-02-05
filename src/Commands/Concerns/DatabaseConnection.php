@@ -22,7 +22,7 @@ trait DatabaseConnection
         $this->connections = $this->normalizeConnectionConfig($configFile);
 
         $container->singleton('db', function () {
-            $capsule = new \Illuminate\Database\Capsule\Manager;
+            $capsule = new \Illuminate\Database\Capsule\Manager();
 
             foreach ($this->connections as $connectionName => $setting) {
                 $capsule->addConnection($setting, $connectionName);
