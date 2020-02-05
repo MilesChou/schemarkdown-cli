@@ -3,9 +3,8 @@
 namespace MilesChou\Docusema\Commands;
 
 use Illuminate\Container\Container;
-use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\DatabaseManager;
 use MilesChou\Docusema\Commands\Concerns\DatabaseConnection;
-use MilesChou\Docusema\Schema;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,6 +13,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateCommand extends Command
 {
     use DatabaseConnection;
+
+    /**
+     * @var Container
+     */
+    private $container;
+
+    /**
+     * @param Container $container
+     * @param string|null $name
+     */
+    public function __construct(Container $container, string $name = null)
+    {
+        parent::__construct($name);
+
+        $this->container = $container;
+    }
 
     protected function configure()
     {
@@ -32,19 +47,16 @@ class GenerateCommand extends Command
         $connection = $input->getOption('connection');
         $outputDir = $input->getOption('output-dir');
 
-        $container = Container::getInstance();
+        $connections = $this->normalizeConnectionConfig($this->normalizePath($configFile));
 
-        $this->prepareConnection(
-            $container,
-            $this->normalizePath($configFile)
-        );
+        $this->container['config']['database.connections'] = $this->filterConnection($connections, $connection);
 
-        $this->filterConnection($connection);
+        /** @var DatabaseManager $databaseManager */
+        $databaseManager = $this->container->get('db');
 
-        /** @var Manager $manager */
-        $manager = Container::getInstance()->get('db');
-
-        $schema = new Schema($manager->getConnection('test_mysql'));
+        $schema = $databaseManager->connection('test_mysql')
+            ->getDoctrineConnection()
+            ->getSchemaManager();
 
         return 0;
     }

@@ -2,53 +2,28 @@
 
 namespace MilesChou\Docusema\Commands\Concerns;
 
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Fluent;
 use RuntimeException;
 
 trait DatabaseConnection
 {
     /**
-     * @var array
-     */
-    protected $connections;
-
-    /**
-     * @param Container $container
-     * @param string $configFile
-     */
-    protected function prepareConnection(Container $container, $configFile): void
-    {
-        $this->connections = $this->normalizeConnectionConfig($configFile);
-
-        $container->singleton('db', function () {
-            $capsule = new \Illuminate\Database\Capsule\Manager();
-
-            foreach ($this->connections as $connectionName => $setting) {
-                $capsule->addConnection($setting, $connectionName);
-            }
-
-            $capsule->setAsGlobal();
-
-            return $capsule;
-        });
-    }
-
-    /**
+     * @param array $connections
      * @param null|string $connection
+     * @return array
      */
-    protected function filterConnection($connection = null)
+    protected function filterConnection(array $connections, $connection = null): array
     {
         if (null === $connection) {
-            return;
+            return $connections;
         }
 
-        if (empty($this->connections[$connection])) {
-            throw new \RuntimeException("Connection '{$connection}' is not found in config file");
+        if (empty($connections[$connection])) {
+            throw new RuntimeException("Connection '{$connection}' is not found in config file");
         }
 
-        $this->connections = [
-            $connection => $this->connections[$connection],
+        return [
+            $connection => $connections[$connection],
         ];
     }
 

@@ -16,7 +16,7 @@ class AppTest extends TestCase
     {
         $output = new BufferedOutput();
 
-        $target = new App();
+        $target = new App($this->container);
         $target->setAutoExit(false);
         $target->run(new ArrayInput([]), $output);
 

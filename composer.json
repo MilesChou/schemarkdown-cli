@@ -16,7 +16,9 @@
     "require": {
         "php": ">=7.1",
         "doctrine/dbal": "^2.6",
-        "illuminate/database": "^5.6 | ^6"
+        "illuminate/database": "^5.6 | ^6",
+        "illuminate/events": "^5.6 | ^6",
+        "laravel-bridge/scratch": "^0.1.2"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
