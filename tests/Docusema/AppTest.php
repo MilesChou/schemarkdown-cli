@@ -2,6 +2,7 @@
 
 namespace Tests\Docusema;
 
+use Corp104\Eloquent\Generator\Commands\GenerateCommand;
 use MilesChou\Docusema\App;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -18,7 +19,7 @@ class AppTest extends TestCase
 
         $target = new App($this->container);
         $target->setAutoExit(false);
-        $target->run(new ArrayInput([]), $output);
+        $target->run(new ArrayInput(['--version' => null]), $output);
 
         $this->assertStringContainsString('Docusema', $output->fetch());
     }

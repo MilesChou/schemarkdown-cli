@@ -28,6 +28,8 @@ class App extends Application
         $this->addCommands([
             new GenerateCommand($container),
         ]);
+
+        $this->setDefaultCommand('generate');
     }
 
     /**

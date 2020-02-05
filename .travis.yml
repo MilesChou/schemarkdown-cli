@@ -34,7 +34,7 @@ install:
 script:
   - make test
   - make analyse
-  - php bin/docusema.php generate --config-file=tests/Fixtures/database.php
+  - php bin/docusema.php --config-file=tests/Fixtures/database.php
   - make clean docusema.phar VERSION=${TRAVIS_BRANCH}
 
 after_success:
