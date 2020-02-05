@@ -33,4 +33,4 @@ container:
 	@docker-compose logs -f
 
 sqlite:
-	@sqlite3 tests/Fixture/sqlite.db < tests/Fixture/sqlite.sql
+	@sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql

@@ -44,4 +44,4 @@ Desktop.ini
 /.phpunit.result.cache
 
 # Tesing files
-/tests/Fixture/sqlite.db
+/tests/Fixtures/sqlite.db
