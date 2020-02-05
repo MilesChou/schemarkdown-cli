@@ -15,7 +15,13 @@ class App extends Application
 
     public function __construct(Container $container)
     {
-        parent::__construct('Docusema', 'dev-master');
+        $version = 'dev-master';
+
+        if (class_exists(Version::class)) {
+            $version = Version::VERSION;
+        }
+
+        parent::__construct('Docusema', $version);
 
         $this->container = $container;
 

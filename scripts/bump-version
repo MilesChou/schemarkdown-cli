@@ -1,0 +1,63 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class Bump extends Command
+{
+    private static $template = <<<EOL
+<?php
+
+namespace MilesChou\Docusema;
+
+class Version
+{
+    const VERSION = 'VERSION_PLACEHOLDER';
+}
+
+EOL;
+
+    protected function configure()
+    {
+        parent::configure();
+
+        $this->setName('bump')
+            ->addArgument('version', InputArgument::OPTIONAL, 'version', $this->branchName());
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $version = $input->getArgument('version');
+
+        $filePath = __DIR__ . '/../src/Version.php';
+
+        file_put_contents($filePath, str_replace('VERSION_PLACEHOLDER', $version, static::$template));
+
+        $output->writeln('>>> Version bump to ' . $version);
+
+        return 0;
+    }
+
+    private function branchName()
+    {
+        $git_head = __DIR__ . '/../.git/HEAD';
+
+        if (!file_exists($git_head)) {
+            return '';
+        }
+
+        $branch = implode('/', array_slice(explode('/', file_get_contents($git_head)), 2));
+
+        return trim($branch);
+    }
+}
+
+$app = new Application();
+$app->add(new Bump());
+$app->run();

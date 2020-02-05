@@ -12,6 +12,11 @@ services:
   - mysql
   - postgresql
 
+branches:
+  only:
+    - master
+    - /^\d+\.\d+\.\d+$/
+
 before_install:
   # Prepare MySQL schema
   - mysql < ./tests/Fixtures/mysql.sql
@@ -23,11 +28,14 @@ before_install:
 
 install:
   - composer install --prefer-dist
+  # Bump the version
+  - ./scripts/bump-version bump ${TRAVIS_BRANCH}
 
 script:
   - make test
   - make analyse
   - php bin/docusema.php generate --config-file=tests/Fixtures/database.php
+  - make clean docusema.phar VERSION=${TRAVIS_BRANCH}
 
 after_success:
   - if [[ "7.1" == "${TRAVIS_PHP_VERSION}" ]]; then bash <(curl -s https://codecov.io/bash) ; fi
@@ -36,3 +44,12 @@ cache:
   directories:
     - $HOME/.composer/cache/files
     - vendor
+
+deploy:
+  provider: releases
+  api_key: ${GITHUB_ACCESS_TOKEN}
+  file: docusema.phar
+  skip_cleanup: true
+  on:
+    tags: true
+    php: 7.1

@@ -18,4 +18,5 @@
     <file>tests</file>
 
     <exclude-pattern>src/templates</exclude-pattern>
+    <exclude-pattern>src/Version.php</exclude-pattern>
 </ruleset>

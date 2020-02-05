@@ -10,6 +10,7 @@ all: test analyse
 
 clean:
 	rm -rf ./build
+	rm -f docusema.phar
 
 clean-all: clean
 	rm -rf ./vendor
@@ -31,6 +32,15 @@ container:
 	@docker-compose down -v
 	@docker-compose up -d
 	@docker-compose logs -f
+
+docusema.phar:
+	@echo ">>> Building phar ..."
+	@composer install --no-dev --optimize-autoloader --quiet
+	@./scripts/bump-version bump ${VERSION}
+	@php -d phar.readonly=off ./scripts/build
+	@chmod +x docusema.phar
+	@echo ">>> Build phar finished."
+	@composer install --dev --quiet
 
 sqlite:
 	@sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql
