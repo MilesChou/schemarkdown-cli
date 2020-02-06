@@ -36,7 +36,7 @@ container:
 docusema.phar:
 	@echo ">>> Building phar ..."
 	@composer install --no-dev --optimize-autoloader --quiet
-	@./scripts/bump-version bump ${VERSION}
+	@./scripts/bump-version ${VERSION}
 	@php -d phar.readonly=off ./scripts/build
 	@chmod +x docusema.phar
 	@echo ">>> Build phar finished."
