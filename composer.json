@@ -1,7 +1,7 @@
 {
     "name": "mileschou/schemarkdown",
     "description": "The database document generator for Laravel",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "laravel", "database"
@@ -10,6 +10,7 @@
         {
             "name": "MilesChou",
             "email": "jangconan@gmail.com",
+            "homepage": "https://mileschou.github.io/",
             "role": "Maintainer"
         }
     ],
@@ -19,9 +20,10 @@
         "illuminate/database": "^5.6 | ^6",
         "illuminate/events": "^5.6 | ^6",
         "illuminate/view": "^5.6 | ^6",
-        "laravel-bridge/scratch": "^0.1.2",
+        "laravel-bridge/scratch": "^0.1",
         "mikey179/vfsstream": "^1.6",
         "symfony/console": "^4 | ^5",
+        "symfony/yaml": "^4 | ^5",
         "vlucas/phpdotenv": "^3"
     },
     "require-dev": {
