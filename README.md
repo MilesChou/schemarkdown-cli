@@ -24,4 +24,4 @@ Here is example [SQL](/examples/examples.sql), import MySQL and run following co
 php bin/docusema.php --config-file=tests/Fixtures/database.php --connection=examples --output-dir=examples
 ```
 
-It will generate this [Markdown document](/examples/users.md).
+It will generate this [Markdown documents](/examples).

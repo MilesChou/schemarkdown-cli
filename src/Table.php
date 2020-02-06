@@ -4,9 +4,9 @@ namespace MilesChou\Docusema;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Index;
-use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Schema\Table as DoctrineTable;
 
-class Schema
+class Table
 {
     /**
      * @var string
@@ -14,15 +14,15 @@ class Schema
     private $database;
 
     /**
-     * @var Table
+     * @var DoctrineTable
      */
     private $table;
 
     /**
-     * @param Table $table
+     * @param DoctrineTable $table
      * @param string $database
      */
-    public function __construct(Table $table, string $database)
+    public function __construct(DoctrineTable $table, string $database)
     {
         $this->table = $table;
         $this->database = $database;
@@ -42,6 +42,11 @@ class Schema
         return $this->table->getColumns();
     }
 
+    /**
+     * Database name
+     *
+     * @return string
+     */
     public function database(): string
     {
         return $this->database;
@@ -55,6 +60,11 @@ class Schema
         return $this->table->getIndexes();
     }
 
+    /**
+     * Table name
+     *
+     * @return string
+     */
     public function table(): string
     {
         return $this->table->getName();

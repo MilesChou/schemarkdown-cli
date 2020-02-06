@@ -1,7 +1,7 @@
 <?php
-/** @var \MilesChou\Docusema\Schema $schema */
+/** @var \MilesChou\Docusema\Table $schema */
 ?>
-# {{ $schema->database() }}.{{ $schema->table() }}
+# Table `{{ $schema->database() }}.{{ $schema->table() }}`
 
 {{ $schema->comment() }}
 

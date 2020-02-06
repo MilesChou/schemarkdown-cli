@@ -79,6 +79,19 @@ class CodeBuilder
 
     /**
      * @param string $connection
+     * @return string
+     */
+    private function createReadmePath($connection): string
+    {
+        if ($this->withConnectionNamespace) {
+            return '/' . Str::snake($connection) . '/README.md';
+        }
+
+        return '/README.md';
+    }
+
+    /**
+     * @param string $connection
      * @return mixed
      * @throws DBALException
      */
@@ -104,19 +117,26 @@ class CodeBuilder
         $schemaManager = $doctrineConnection
             ->getSchemaManager();
 
-
-        return collect($schemaManager->listTableNames())
+        $reduce = collect($schemaManager->listTableNames())
             ->reduce(function ($carry, $table) use ($connection, $databaseConnection, $schemaManager) {
                 $relativePath = $this->createRelativePath($connection, $table);
 
                 $carry[$relativePath] = View::make('table', [
-                    'schema' => new Schema(
+                    'schema' => new Table(
                         $schemaManager->listTableDetails($table),
                         $databaseConnection->getDatabaseName()
-                    )
+                    ),
                 ])->render();
 
                 return $carry;
             }, []);
+
+        $relativePath = $this->createReadmePath($connection);
+
+        $reduce[$relativePath] = View::make('database', [
+            'database' => new Database($schemaManager, $databaseConnection->getDatabaseName()),
+        ])->render();
+
+        return $reduce;
     }
 }

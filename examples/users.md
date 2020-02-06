@@ -1,4 +1,4 @@
-# examples.users
+# Table `examples.users`
 
 User registration table
 
