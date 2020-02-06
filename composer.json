@@ -21,7 +21,8 @@
         "illuminate/view": "^5.6 | ^6",
         "laravel-bridge/scratch": "^0.1.2",
         "mikey179/vfsstream": "^1.6",
-        "symfony/console": "^4 | ^5"
+        "symfony/console": "^4 | ^5",
+        "vlucas/phpdotenv": "^3"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12",

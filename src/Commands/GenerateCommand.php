@@ -2,6 +2,7 @@
 
 namespace MilesChou\Docusema\Commands;
 
+use MilesChou\Docusema\Commands\Concerns\Environment;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use MilesChou\Docusema\CodeBuilder;
@@ -15,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateCommand extends Command
 {
     use DatabaseConnection;
+    use Environment;
 
     /**
      * @var Container
@@ -38,6 +40,7 @@ class GenerateCommand extends Command
 
         $this->setName('generate')
             ->setDescription('Generate Markdown')
+            ->addOption('--env', null, InputOption::VALUE_REQUIRED, '.env file', '.env')
             ->addOption('--config-file', null, InputOption::VALUE_REQUIRED, 'Config file', 'config/database.php')
             ->addOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build', null)
             ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'generated');
@@ -45,9 +48,12 @@ class GenerateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $env = $input->getOption('env');
         $configFile = $input->getOption('config-file');
         $connection = $input->getOption('connection');
         $outputDir = $input->getOption('output-dir');
+
+        $this->loadDotEnv($this->normalizePath($env));
 
         $connections = $this->normalizeConnectionConfig($this->normalizePath($configFile));
 
