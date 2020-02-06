@@ -1,10 +1,10 @@
 {
     "name": "mileschou/docusema",
-    "description": "The Schema docs generator",
+    "description": "The database document generator for Laravel",
     "type": "project",
     "license": "MIT",
     "keywords": [
-        "schema"
+        "laravel", "database"
     ],
     "authors": [
         {
