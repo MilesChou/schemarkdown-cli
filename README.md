@@ -15,3 +15,13 @@ php docusema.phar
 ```
 
 It will generate database schema document in `generated` directory.
+
+## Example
+
+Here is example [SQL](/examples/examples.sql), import MySQL and run following command:
+
+```
+php bin/docusema.php --config-file=tests/Fixtures/database.php --connection=examples --output-dir=examples
+```
+
+It will generate this [Markdown document](/examples/users.md).

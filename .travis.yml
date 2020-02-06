@@ -20,6 +20,7 @@ branches:
 before_install:
   # Prepare MySQL schema
   - mysql < ./tests/Fixtures/mysql.sql
+  - mysql < ./examples/examples.sql
   - mysql -e "SET PASSWORD = PASSWORD('password');"
   # Prepare Sqlite schema
   - sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql

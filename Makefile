@@ -2,7 +2,7 @@
 
 PHP_MAJOR_VERSION := $(shell php -r "echo PHP_MAJOR_VERSION;")
 
-.PHONY: all clean clean-all check test analyse coverage container sqlite
+.PHONY: all clean clean-all check test analyse coverage container sqlite examples
 
 # ---------------------------------------------------------------------
 
@@ -44,3 +44,6 @@ docusema.phar:
 
 sqlite:
 	@sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql
+
+examples:
+	php bin/docusema.php --config-file=tests/Fixtures/database.php --output-dir=examples
