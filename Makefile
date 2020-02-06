@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-PHP_MAJOR_VERSION := $(shell php -r "echo PHP_MAJOR_VERSION;")
+INSTALL_PATH := /usr/local/bin/schemarkdown
 
 .PHONY: all clean clean-all check test analyse coverage container sqlite examples
 
@@ -47,3 +47,6 @@ sqlite:
 
 examples:
 	php bin/schemarkdown.php --config-file=tests/Fixtures/database.php --output-dir=examples
+
+install:
+	mv schemarkdown.phar ${INSTALL_PATH}

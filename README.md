@@ -52,6 +52,14 @@ php bin/schemarkdown.php --config-file=tests/Fixtures/database.php --connection=
 
 It will generate this [Markdown documents](/examples).
 
+## Build Yourself
+
+Clone this repository and run `make` command:
+
+```bash
+make
+```
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
