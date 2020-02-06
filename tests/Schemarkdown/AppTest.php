@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Docusema;
+namespace Tests\Schemarkdown;
 
 use Corp104\Eloquent\Generator\Commands\GenerateCommand;
-use MilesChou\Docusema\App;
+use MilesChou\Schemarkdown\App;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Tests\TestCase;
@@ -21,6 +21,6 @@ class AppTest extends TestCase
         $target->setAutoExit(false);
         $target->run(new ArrayInput(['--version' => null]), $output);
 
-        $this->assertStringContainsString('Docusema', $output->fetch());
+        $this->assertStringContainsString('Schemarkdown', $output->fetch());
     }
 }

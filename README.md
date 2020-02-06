@@ -1,25 +1,25 @@
-# Docusema
+# Schemarkdown
 
-[![Build Status](https://travis-ci.com/MilesChou/docusema.svg?branch=master)](https://travis-ci.com/MilesChou/docusema)
-[![codecov](https://codecov.io/gh/MilesChou/docusema/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/docusema)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/416d2087f50144e5be348825ff912936)](https://www.codacy.com/manual/MilesChou/docusema)
+[![Build Status](https://travis-ci.com/MilesChou/schemarkdown.svg?branch=master)](https://travis-ci.com/MilesChou/schemarkdown)
+[![codecov](https://codecov.io/gh/MilesChou/schemarkdown/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/schemarkdown)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e858d7ebc494a7db0f3c9a92f40a72e)](https://www.codacy.com/manual/MilesChou/schemarkdown)
 
 The database document generator for Laravel.
 
 ## Installation
 
-Download the [Release](https://github.com/MilesChou/docusema/releases) phar file and execute it:
+Download the [Release](https://github.com/MilesChou/schemarkdown/releases) phar file and execute it:
 
 ```bash
-chmod +x docusema.phar
-./docusema.phar
+chmod +x schemarkdown.phar
+./schemarkdown.phar
 ```
 
 Or move into `/usr/local/bin` if want globally call:
 
 ```bash
-mv docusema.phar /usr/local/bin/docusema
-docusema
+mv schemarkdown.phar /usr/local/bin/schemarkdown
+schemarkdown
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ In Laravel project, you can run this command immediately:
 
 ```bash
 cd /path/to/your/project
-docusema
+schemarkdown
 ```
 
 Schema document are stored to `generated` directory default. Use the `--output-dir` option to change it.
@@ -44,7 +44,7 @@ Use the `--connection` option to specify **connection name** in Laravel config t
 Here is example [SQL](/examples/examples.sql), import MySQL and run following command:
 
 ```
-php bin/docusema.php --config-file=tests/Fixtures/database.php --connection=examples --output-dir=examples
+php bin/schemarkdown.php --config-file=tests/Fixtures/database.php --connection=examples --output-dir=examples
 ```
 
 It will generate this [Markdown documents](/examples).

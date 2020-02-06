@@ -1,6 +1,6 @@
 <?php
 
-namespace MilesChou\Docusema;
+namespace MilesChou\Schemarkdown;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Index;

@@ -1,6 +1,6 @@
 <?php
 
-namespace MilesChou\Docusema;
+namespace MilesChou\Schemarkdown;
 
 use Doctrine\DBAL\DBALException;
 use Illuminate\Container\Container;

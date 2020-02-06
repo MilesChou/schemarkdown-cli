@@ -3,7 +3,7 @@
 
 $extensions = ['php', 'txt'];
 $dir = dirname(__DIR__) . '/';
-$filename = 'docusema.phar';
+$filename = 'schemarkdown.phar';
 $path = dirname(__DIR__) . '/' . $filename;
 
 $phar = new Phar($path, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, $filename);
@@ -26,7 +26,7 @@ Phar::mapPhar();
 __HALT_COMPILER();
 EOF;
 
-$source = Phar::createDefaultStub('bin/docusema.php');
+$source = Phar::createDefaultStub('bin/schemarkdown.php');
 
 if (strpos($source, '#!/usr/bin/env php') === 0) {
     $source = substr($source, strpos($source, '<?php') + 5);

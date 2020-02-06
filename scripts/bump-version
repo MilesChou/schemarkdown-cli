@@ -14,7 +14,7 @@ class Bump extends Command
     private static $template = <<<EOL
 <?php
 
-namespace MilesChou\Docusema;
+namespace MilesChou\Schemarkdown;
 
 class Version
 {

@@ -1,5 +1,5 @@
 <?php
-/** @var \MilesChou\Docusema\Table $schema */
+/** @var \MilesChou\Schemarkdown\Table $schema */
 ?>
 # Table `{{ $schema->database() }}.{{ $schema->table() }}`
 

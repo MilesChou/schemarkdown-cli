@@ -1,5 +1,5 @@
 <?php
-/** @var \MilesChou\Docusema\Database $database */
+/** @var \MilesChou\Schemarkdown\Database $database */
 ?>
 # Database `{{ $database->database() }}`
 

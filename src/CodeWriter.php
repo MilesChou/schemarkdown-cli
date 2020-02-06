@@ -1,6 +1,6 @@
 <?php
 
-namespace MilesChou\Docusema;
+namespace MilesChou\Schemarkdown;
 
 class CodeWriter
 {

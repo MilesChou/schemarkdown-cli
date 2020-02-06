@@ -1,5 +1,5 @@
 {
-    "name": "mileschou/docusema",
+    "name": "mileschou/schemarkdown",
     "description": "The database document generator for Laravel",
     "type": "project",
     "license": "MIT",
@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MilesChou\\Docusema\\": "src"
+            "MilesChou\\Schemarkdown\\": "src"
         }
     },
     "autoload-dev": {

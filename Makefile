@@ -10,7 +10,7 @@ all: test analyse
 
 clean:
 	rm -rf ./build
-	rm -f docusema.phar
+	rm -f schemarkdown.phar
 
 clean-all: clean
 	rm -rf ./vendor
@@ -33,12 +33,12 @@ container:
 	@docker-compose up -d
 	@docker-compose logs -f
 
-docusema.phar:
+schemarkdown.phar:
 	@echo ">>> Building phar ..."
 	@composer install --no-dev --optimize-autoloader --quiet
 	@./scripts/bump-version ${VERSION}
 	@php -d phar.readonly=off ./scripts/build
-	@chmod +x docusema.phar
+	@chmod +x schemarkdown.phar
 	@echo ">>> Build phar finished."
 	@composer install --dev --quiet
 
@@ -46,4 +46,4 @@ sqlite:
 	@sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql
 
 examples:
-	php bin/docusema.php --config-file=tests/Fixtures/database.php --output-dir=examples
+	php bin/schemarkdown.php --config-file=tests/Fixtures/database.php --output-dir=examples

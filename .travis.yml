@@ -35,8 +35,8 @@ install:
 script:
   - make test
   - make analyse
-  - php bin/docusema.php --config-file=tests/Fixtures/database.php
-  - make clean docusema.phar VERSION=${TRAVIS_BRANCH}
+  - php bin/schemarkdown.php --config-file=tests/Fixtures/database.php
+  - make clean schemarkdown.phar VERSION=${TRAVIS_BRANCH}
 
 after_success:
   - if [[ "7.1" == "${TRAVIS_PHP_VERSION}" ]]; then bash <(curl -s https://codecov.io/bash) ; fi
@@ -49,7 +49,7 @@ cache:
 deploy:
   provider: releases
   token: ${GITHUB_ACCESS_TOKEN}
-  file: docusema.phar
+  file: schemarkdown.phar
   skip_cleanup: true
   on:
     tags: true

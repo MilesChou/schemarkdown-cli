@@ -1,6 +1,6 @@
 <?php
 
-namespace MilesChou\Docusema\Commands\Concerns;
+namespace MilesChou\Schemarkdown\Commands\Concerns;
 
 use Dotenv\Dotenv;
 

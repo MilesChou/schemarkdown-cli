@@ -1,9 +1,9 @@
 <?php
 
-namespace MilesChou\Docusema;
+namespace MilesChou\Schemarkdown;
 
 use Illuminate\Container\Container;
-use MilesChou\Docusema\Commands\GenerateCommand;
+use MilesChou\Schemarkdown\Commands\GenerateCommand;
 use Symfony\Component\Console\Application;
 
 class App extends Application
@@ -21,7 +21,7 @@ class App extends Application
             $version = Version::VERSION;
         }
 
-        parent::__construct('Docusema', $version);
+        parent::__construct('Schemarkdown', $version);
 
         $this->container = $container;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace MilesChou\Docusema\Commands;
+namespace MilesChou\Schemarkdown\Commands;
 
-use MilesChou\Docusema\Commands\Concerns\Environment;
+use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
-use MilesChou\Docusema\CodeBuilder;
-use MilesChou\Docusema\CodeWriter;
-use MilesChou\Docusema\Commands\Concerns\DatabaseConnection;
+use MilesChou\Schemarkdown\CodeBuilder;
+use MilesChou\Schemarkdown\CodeWriter;
+use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

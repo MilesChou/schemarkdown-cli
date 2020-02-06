@@ -1,7 +1,7 @@
 <?php
 
 use LaravelBridge\Scratch\Application as LaravelBridge;
-use MilesChou\Docusema\App;
+use MilesChou\Schemarkdown\App;
 use org\bovigo\vfs\vfsStream;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
