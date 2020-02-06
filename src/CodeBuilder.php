@@ -2,6 +2,7 @@
 
 namespace MilesChou\Docusema;
 
+use Doctrine\DBAL\DBALException;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\View;
@@ -79,13 +80,30 @@ class CodeBuilder
     /**
      * @param string $connection
      * @return mixed
+     * @throws DBALException
      */
     private function transferDatabaseToCode($connection)
     {
         $databaseConnection = $this->databaseManager->connection($connection);
-        $schemaManager = $databaseConnection
-            ->getDoctrineConnection()
+
+        $doctrineConnection = $databaseConnection->getDoctrineConnection();
+
+        $databasePlatform = $doctrineConnection->getDatabasePlatform();
+        $databasePlatform->registerDoctrineTypeMapping('json', 'text');
+        $databasePlatform->registerDoctrineTypeMapping('jsonb', 'text');
+        $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
+        $databasePlatform->registerDoctrineTypeMapping('bit', 'boolean');
+
+        // Postgres types
+        $databasePlatform->registerDoctrineTypeMapping('_text', 'text');
+        $databasePlatform->registerDoctrineTypeMapping('_int4', 'integer');
+        $databasePlatform->registerDoctrineTypeMapping('_numeric', 'float');
+        $databasePlatform->registerDoctrineTypeMapping('cidr', 'string');
+        $databasePlatform->registerDoctrineTypeMapping('inet', 'string');
+
+        $schemaManager = $doctrineConnection
             ->getSchemaManager();
+
 
         return collect($schemaManager->listTableNames())
             ->reduce(function ($carry, $table) use ($connection, $databaseConnection, $schemaManager) {
