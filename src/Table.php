@@ -2,9 +2,11 @@
 
 namespace MilesChou\Schemarkdown;
 
-use Doctrine\DBAL\Schema\Column;
-use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Column as DoctrineColumn;
+use Doctrine\DBAL\Schema\Index as DoctrineIndex;
 use Doctrine\DBAL\Schema\Table as DoctrineTable;
+use MilesChou\Schemarkdown\Models\Column;
+use MilesChou\Schemarkdown\Models\Index;
 
 class Table
 {
@@ -35,11 +37,13 @@ class Table
     }
 
     /**
-     * @return Column[]
+     * @return DoctrineColumn[]
      */
     public function columns(): iterable
     {
-        return $this->table->getColumns();
+        return collect($this->table->getColumns())->transform(function ($value) {
+            return new Column($value);
+        });
     }
 
     /**
@@ -53,11 +57,13 @@ class Table
     }
 
     /**
-     * @return Index[]
+     * @return DoctrineIndex[]
      */
     public function indexes(): iterable
     {
-        return $this->table->getIndexes();
+        return collect($this->table->getIndexes())->transform(function ($value) {
+            return new Index($value);
+        });
     }
 
     /**
