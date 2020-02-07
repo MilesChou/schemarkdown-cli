@@ -28,4 +28,17 @@ class Index
 
         throw new BadMethodCallException('Undefined method ' . $name . ' in class ' . static::class);
     }
+
+    public function type(): string
+    {
+        if ($this->doctrineIndex->isPrimary()) {
+            return 'primary';
+        }
+
+        if ($this->doctrineIndex->isUnique()) {
+            return 'unique';
+        }
+
+        return 'index';
+    }
 }

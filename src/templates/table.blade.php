@@ -15,8 +15,8 @@
 
 ## Indexes
 
-| Key | Name | Columns | Unique |
-| --- | --- | --- | --- |
+| Name | Columns | Type |
+| --- | --- | --- |
 @foreach($schema->indexes() as $key)
-| {{ $key->isPrimary() ? 'PK' : '' }} | {{ $key->getName() }} | {{ implode(',', $key->getColumns()) }} | {{ $key->isUnique() ? 'true' : 'false' }} |  |  |
+| {{ $key->getName() }} | {{ implode(',', $key->getColumns()) }} | {{ strtoupper($key->type()) }} |
 @endforeach

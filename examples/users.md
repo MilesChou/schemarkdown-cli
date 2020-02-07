@@ -15,7 +15,7 @@ User registration table
 
 ## Indexes
 
-| Key | Name | Columns | Unique |
-| --- | --- | --- | --- |
-|  | email | email | true |  |  |
-| PK | PRIMARY | id | true |  |  |
+| Name | Columns | Type |
+| --- | --- | --- |
+| email | email | UNIQUE |
+| PRIMARY | id | PRIMARY |
