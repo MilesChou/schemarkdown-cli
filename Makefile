@@ -6,7 +6,7 @@ INSTALL_PATH := /usr/local/bin/schemarkdown
 
 # ---------------------------------------------------------------------
 
-all: test analyse
+all: clean test analyse schemarkdown.phar
 
 clean:
 	rm -rf ./build
