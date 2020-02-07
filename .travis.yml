@@ -33,7 +33,8 @@ install:
   - ./scripts/bump-version ${TRAVIS_BRANCH}
 
 script:
-  - make test
+  - php vendor/bin/phpcs
+  - php vendor/bin/phpunit --coverage-clover=coverage.xml
   - make analyse
   - php bin/schemarkdown.php --config-file=tests/Fixtures/database.php
   - make clean schemarkdown.phar VERSION=${TRAVIS_BRANCH}
