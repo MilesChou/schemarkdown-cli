@@ -60,6 +60,16 @@ Clone this repository and run `make` command:
 make
 ```
 
+## Troubleshooting
+
+### Memory limit errors
+
+Schemarkdown respects a memory limit defined by the `MEMORY_LIMIT` environment variable:
+
+```
+MEMORY_LIMIT=-1 schemarkdown
+```
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.

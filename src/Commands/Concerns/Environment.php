@@ -16,5 +16,9 @@ trait Environment
             $path = dirname($envFile);
             (Dotenv::create($path, $file))->load();
         }
+
+        if (getenv('MEMORY_LIMIT')) {
+            ini_set('memory_limit', getenv('MEMORY_LIMIT'));
+        }
     }
 }
