@@ -2,6 +2,8 @@
 
 namespace MilesChou\Schemarkdown;
 
+use Illuminate\Support\Facades\Log;
+
 class CodeWriter
 {
     /**
@@ -28,6 +30,8 @@ class CodeWriter
         }
 
         collect($code)->each(function ($code, $filePath) use ($pathPrefix) {
+            Log::info("Write file '{$filePath}'");
+
             $this->writeCode($code, $filePath, $pathPrefix);
         });
     }

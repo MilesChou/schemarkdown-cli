@@ -7,6 +7,7 @@ use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Psr\Log\LoggerInterface;
 
 class CodeBuilder
 {
@@ -21,14 +22,14 @@ class CodeBuilder
     private $databaseManager;
 
     /**
-     * @var string
-     */
-    private $namespace;
-
-    /**
      * @var bool
      */
     private $withConnectionNamespace;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * @param Container $container
@@ -39,6 +40,7 @@ class CodeBuilder
         $this->databaseManager = $databaseManager;
 
         $this->connections = $container['config']['database.connections'];
+        $this->logger = $container->make('log');
         $this->withConnectionNamespace = count($this->connections) > 1;
     }
 
@@ -48,19 +50,64 @@ class CodeBuilder
     public function build(): array
     {
         return collect($this->connections)->flatMap(function ($config, $connection) {
-            return $this->transferDatabaseToCode($connection);
+            $this->logger->info("Build connection '{$connection}' to markdown ...");
+
+            return $this->buildConnection($connection);
         })->toArray();
     }
 
     /**
-     * @param string $namespace
-     * @return static
+     * @param string $connection
+     * @return mixed
+     * @throws DBALException
      */
-    public function setNamespace($namespace): CodeBuilder
+    private function buildConnection($connection)
     {
-        $this->namespace = $namespace;
+        $databaseConnection = $this->databaseManager->connection($connection);
 
-        return $this;
+        $doctrineConnection = $databaseConnection->getDoctrineConnection();
+
+        $databasePlatform = $doctrineConnection->getDatabasePlatform();
+        $databasePlatform->registerDoctrineTypeMapping('json', 'text');
+        $databasePlatform->registerDoctrineTypeMapping('jsonb', 'text');
+        $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
+        $databasePlatform->registerDoctrineTypeMapping('bit', 'boolean');
+
+        // Postgres types
+        $databasePlatform->registerDoctrineTypeMapping('_text', 'text');
+        $databasePlatform->registerDoctrineTypeMapping('_int4', 'integer');
+        $databasePlatform->registerDoctrineTypeMapping('_numeric', 'float');
+        $databasePlatform->registerDoctrineTypeMapping('cidr', 'string');
+        $databasePlatform->registerDoctrineTypeMapping('inet', 'string');
+
+        $schemaManager = $doctrineConnection
+            ->getSchemaManager();
+
+        $reduce = collect($schemaManager->listTableNames())
+            ->reduce(function ($carry, $table) use ($connection, $databaseConnection, $schemaManager) {
+                $relativePath = $this->createRelativePath($connection, $table);
+
+                $this->logger->info("Build schema markdown '{$relativePath}' ...");
+
+                $carry[$relativePath] = View::make('table', [
+                    'schema' => new Table(
+                        $schemaManager->listTableDetails($table),
+                        $databaseConnection->getDatabaseName()
+                    ),
+                ])->render();
+
+                return $carry;
+            }, []);
+
+        $relativePath = $this->createReadmePath($connection);
+
+        $this->logger->info("Build readme markdown '{$relativePath}' ...");
+
+        $reduce[$relativePath] = View::make('database', [
+            'database' => new Database($schemaManager, $databaseConnection->getDatabaseName()),
+        ])->render();
+
+        return $reduce;
     }
 
     /**
@@ -88,55 +135,5 @@ class CodeBuilder
         }
 
         return '/README.md';
-    }
-
-    /**
-     * @param string $connection
-     * @return mixed
-     * @throws DBALException
-     */
-    private function transferDatabaseToCode($connection)
-    {
-        $databaseConnection = $this->databaseManager->connection($connection);
-
-        $doctrineConnection = $databaseConnection->getDoctrineConnection();
-
-        $databasePlatform = $doctrineConnection->getDatabasePlatform();
-        $databasePlatform->registerDoctrineTypeMapping('json', 'text');
-        $databasePlatform->registerDoctrineTypeMapping('jsonb', 'text');
-        $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
-        $databasePlatform->registerDoctrineTypeMapping('bit', 'boolean');
-
-        // Postgres types
-        $databasePlatform->registerDoctrineTypeMapping('_text', 'text');
-        $databasePlatform->registerDoctrineTypeMapping('_int4', 'integer');
-        $databasePlatform->registerDoctrineTypeMapping('_numeric', 'float');
-        $databasePlatform->registerDoctrineTypeMapping('cidr', 'string');
-        $databasePlatform->registerDoctrineTypeMapping('inet', 'string');
-
-        $schemaManager = $doctrineConnection
-            ->getSchemaManager();
-
-        $reduce = collect($schemaManager->listTableNames())
-            ->reduce(function ($carry, $table) use ($connection, $databaseConnection, $schemaManager) {
-                $relativePath = $this->createRelativePath($connection, $table);
-
-                $carry[$relativePath] = View::make('table', [
-                    'schema' => new Table(
-                        $schemaManager->listTableDetails($table),
-                        $databaseConnection->getDatabaseName()
-                    ),
-                ])->render();
-
-                return $carry;
-            }, []);
-
-        $relativePath = $this->createReadmePath($connection);
-
-        $reduce[$relativePath] = View::make('database', [
-            'database' => new Database($schemaManager, $databaseConnection->getDatabaseName()),
-        ])->render();
-
-        return $reduce;
     }
 }

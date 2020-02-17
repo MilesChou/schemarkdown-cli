@@ -2,14 +2,13 @@
 
 namespace MilesChou\Schemarkdown\Commands;
 
-use Illuminate\Log\LogManager;
-use Illuminate\Support\Facades\Log;
-use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Log\LogManager;
 use MilesChou\Schemarkdown\CodeBuilder;
 use MilesChou\Schemarkdown\CodeWriter;
 use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
+use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -85,7 +84,13 @@ class GenerateCommand extends Command
 
         $code = (new CodeBuilder($this->container, $databaseManager))->build();
 
+        $logger = $this->container->make('log');
+
+        $logger->info('All document build success, next will write files');
+
         (new CodeWriter())->generate($code, $outputDir);
+
+        $logger->info('All document write success');
 
         return 0;
     }
