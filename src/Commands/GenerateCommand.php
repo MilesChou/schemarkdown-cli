@@ -2,6 +2,8 @@
 
 namespace MilesChou\Schemarkdown\Commands;
 
+use Illuminate\Log\LogManager;
+use Illuminate\Support\Facades\Log;
 use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
@@ -11,6 +13,7 @@ use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends Command
@@ -32,6 +35,24 @@ class GenerateCommand extends Command
         parent::__construct($name);
 
         $this->container = $container;
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $loggerName = 'schemarkdown';
+
+        $this->container['config']['logging.default'] = $loggerName;
+        $this->container['config']["logging.channels.{$loggerName}"] = [
+            'driver' => $loggerName,
+        ];
+
+        /** @var LogManager $loggerManager */
+        $loggerManager = $this->container->make('log');
+        $loggerManager->extend($loggerName, function () use ($output) {
+            return new ConsoleLogger($output);
+        });
+
+        $loggerManager->setDefaultDriver($loggerName);
     }
 
     protected function configure()
