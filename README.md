@@ -62,6 +62,8 @@ make
 
 ## Troubleshooting
 
+Use `-vv` option to see info log.
+
 ### Memory limit errors
 
 Schemarkdown respects a memory limit defined by the `MEMORY_LIMIT` environment variable:

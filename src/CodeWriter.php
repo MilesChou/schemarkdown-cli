@@ -20,20 +20,16 @@ class CodeWriter
     }
 
     /**
-     * @param array|callable $code Array or callable which should return array like [filePath => code]
+     * @param iterable $generator Array or callable which should return array like [filePath => code]
      * @param string $pathPrefix
      */
-    public function generate($code, $pathPrefix): void
+    public function generate(iterable $generator, $pathPrefix): void
     {
-        if (is_callable($code)) {
-            $code = $code();
-        }
-
-        collect($code)->each(function ($code, $filePath) use ($pathPrefix) {
+        foreach ($generator as $filePath => $code) {
             Log::info("Write file '{$filePath}'");
 
             $this->writeCode($code, $filePath, $pathPrefix);
-        });
+        }
     }
 
     /**

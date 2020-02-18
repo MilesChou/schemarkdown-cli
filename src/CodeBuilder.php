@@ -38,7 +38,6 @@ class CodeBuilder
     public function __construct(Container $container, DatabaseManager $databaseManager)
     {
         $this->databaseManager = $databaseManager;
-
         $this->connections = $container['config']['database.connections'];
         $this->logger = $container->make('log');
         $this->withConnectionNamespace = count($this->connections) > 1;
@@ -46,14 +45,15 @@ class CodeBuilder
 
     /**
      * @return array [filepath => code]
+     * @throws DBALException
      */
-    public function build(): array
+    public function build(): iterable
     {
-        return collect($this->connections)->flatMap(function ($config, $connection) {
+        foreach (array_keys($this->connections) as $connection) {
             $this->logger->info("Build connection '{$connection}' to markdown ...");
 
-            return $this->buildConnection($connection);
-        })->toArray();
+            yield from $this->buildConnection($connection);
+        }
     }
 
     /**
@@ -80,34 +80,28 @@ class CodeBuilder
         $databasePlatform->registerDoctrineTypeMapping('cidr', 'string');
         $databasePlatform->registerDoctrineTypeMapping('inet', 'string');
 
-        $schemaManager = $doctrineConnection
-            ->getSchemaManager();
-
-        $reduce = collect($schemaManager->listTableNames())
-            ->reduce(function ($carry, $table) use ($connection, $databaseConnection, $schemaManager) {
-                $relativePath = $this->createRelativePath($connection, $table);
-
-                $this->logger->info("Build schema markdown '{$relativePath}' ...");
-
-                $carry[$relativePath] = View::make('table', [
-                    'schema' => new Table(
-                        $schemaManager->listTableDetails($table),
-                        $databaseConnection->getDatabaseName()
-                    ),
-                ])->render();
-
-                return $carry;
-            }, []);
+        $schemaManager = $doctrineConnection->getSchemaManager();
 
         $relativePath = $this->createReadmePath($connection);
 
         $this->logger->info("Build readme markdown '{$relativePath}' ...");
 
-        $reduce[$relativePath] = View::make('database', [
+        yield $relativePath => View::make('database', [
             'database' => new Database($schemaManager, $databaseConnection->getDatabaseName()),
         ])->render();
 
-        return $reduce;
+        foreach ($schemaManager->listTableNames() as $tableName) {
+            $relativePath = $this->createRelativePath($connection, $tableName);
+
+            $this->logger->info("Build schema markdown '{$relativePath}' ...");
+
+            yield $relativePath => View::make('table', [
+                'schema' => new Table(
+                    $schemaManager->listTableDetails($tableName),
+                    $databaseConnection->getDatabaseName()
+                ),
+            ])->render();
+        }
     }
 
     /**
