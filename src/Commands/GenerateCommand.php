@@ -88,7 +88,7 @@ class GenerateCommand extends Command
 
         $logger->info('All document build success, next will write files');
 
-        (new CodeWriter())->generate($code, $outputDir);
+        $this->container->make(CodeWriter::class)->generate($code, $outputDir);
 
         $logger->info('All document write success');
 

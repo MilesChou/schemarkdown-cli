@@ -2,21 +2,29 @@
 
 namespace MilesChou\Schemarkdown;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\Filesystem\Filesystem;
+use Psr\Log\LoggerInterface;
 
 class CodeWriter
 {
     /**
-     * @var bool
+     * @var Filesystem
      */
-    private $overwrite;
+    private $filesystem;
 
     /**
-     * @param bool $overwrite
+     * @var LoggerInterface
      */
-    public function __construct($overwrite = true)
+    private $logger;
+
+    /**
+     * @param Filesystem $filesystem
+     * @param LoggerInterface $logger
+     */
+    public function __construct(Filesystem $filesystem, LoggerInterface $logger)
     {
-        $this->overwrite = $overwrite;
+        $this->filesystem = $filesystem;
+        $this->logger = $logger;
     }
 
     /**
@@ -26,7 +34,7 @@ class CodeWriter
     public function generate(iterable $generator, $pathPrefix): void
     {
         foreach ($generator as $filePath => $code) {
-            Log::info("Write file '{$filePath}'");
+            $this->logger->info("Write file '{$filePath}'");
 
             $this->writeCode($code, $filePath, $pathPrefix);
         }
@@ -41,16 +49,12 @@ class CodeWriter
     {
         $fullPath = $pathPrefix . '/' . $filePath;
 
-        if (!$this->overwrite && is_file($fullPath)) {
-            return;
+        $dir = $this->filesystem->dirname($fullPath);
+
+        if (!$this->filesystem->isDirectory($dir)) {
+            $this->filesystem->makeDirectory($dir, 0755, true, true);
         }
 
-        $dir = dirname($fullPath);
-
-        if (!is_dir($dir)) {
-            @mkdir($dir, 0755, true);
-        }
-
-        file_put_contents($fullPath, $code);
+        $this->filesystem->put($fullPath, $code);
     }
 }
