@@ -7,7 +7,7 @@
 [![Total Downloads](https://poser.pugx.org/MilesChou/schemarkdown/d/total.svg)](https://packagist.org/packages/MilesChou/schemarkdown)
 [![License](https://poser.pugx.org/MilesChou/schemarkdown/license)](https://packagist.org/packages/MilesChou/schemarkdown)
 
-The database document generator for Laravel.
+The schema document generator.
 
 ## Installation
 

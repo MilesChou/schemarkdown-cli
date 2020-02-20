@@ -1,6 +1,6 @@
 {
     "name": "mileschou/schemarkdown",
-    "description": "The database document generator for Laravel",
+    "description": "The schema document generator",
     "type": "library",
     "license": "MIT",
     "keywords": [
