@@ -5,8 +5,8 @@ namespace MilesChou\Schemarkdown\Commands;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Log\LogManager;
+use MilesChou\Codegener\Writer;
 use MilesChou\Schemarkdown\CodeBuilder;
-use MilesChou\Schemarkdown\CodeWriter;
 use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
 use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Symfony\Component\Console\Command\Command;
@@ -63,7 +63,8 @@ class GenerateCommand extends Command
             ->addOption('--env', null, InputOption::VALUE_REQUIRED, '.env file', '.env')
             ->addOption('--config-file', null, InputOption::VALUE_REQUIRED, 'Config file', 'config/database.php')
             ->addOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build', null)
-            ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'generated');
+            ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'generated')
+            ->addOption('--overwrite', null, InputOption::VALUE_NONE, 'Overwrite the exist file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -72,6 +73,7 @@ class GenerateCommand extends Command
         $configFile = $input->getOption('config-file');
         $connection = $input->getOption('connection');
         $outputDir = $input->getOption('output-dir');
+        $overwrite = $input->getOption('overwrite');
 
         $this->loadDotEnv($this->normalizePath($env));
 
@@ -88,7 +90,9 @@ class GenerateCommand extends Command
 
         $logger->info('All document build success, next will write files');
 
-        $this->container->make(CodeWriter::class)->generate($code, $outputDir);
+        /** @var Writer $writer */
+        $writer = $this->container->make(Writer::class);
+        $writer->writeMass($code, $outputDir, $overwrite);
 
         $logger->info('All document write success');
 

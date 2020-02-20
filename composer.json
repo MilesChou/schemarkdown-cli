@@ -24,6 +24,7 @@
         "illuminate/view": "^5.6 | ^6",
         "laravel-bridge/scratch": "^0.5",
         "mikey179/vfsstream": "^1.6",
+        "mileschou/codegener": "^1.0",
         "monolog/monolog": "^1.25",
         "symfony/console": "^4 | ^5",
         "symfony/yaml": "^4 | ^5",
