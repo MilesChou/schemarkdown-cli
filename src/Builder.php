@@ -7,9 +7,11 @@ use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use MilesChou\Schemarkdown\Models\Schema;
+use MilesChou\Schemarkdown\Models\Table;
 use Psr\Log\LoggerInterface;
 
-class CodeBuilder
+class Builder
 {
     /**
      * @var array
@@ -86,8 +88,8 @@ class CodeBuilder
 
         $this->logger->info("Build readme markdown '{$relativePath}' ...");
 
-        yield $relativePath => View::make('database', [
-            'database' => new Database($schemaManager, $databaseConnection->getDatabaseName()),
+        yield $relativePath => View::make('schema', [
+            'schema' => new Schema($schemaManager, $databaseConnection->getDatabaseName()),
         ])->render();
 
         foreach ($schemaManager->listTableNames() as $tableName) {
@@ -96,7 +98,7 @@ class CodeBuilder
             $this->logger->info("Build schema markdown '{$relativePath}' ...");
 
             yield $relativePath => View::make('table', [
-                'schema' => new Table(
+                'table' => new Table(
                     $schemaManager->listTableDetails($tableName),
                     $databaseConnection->getDatabaseName()
                 ),

@@ -6,7 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Log\LogManager;
 use MilesChou\Codegener\Writer;
-use MilesChou\Schemarkdown\CodeBuilder;
+use MilesChou\Schemarkdown\Builder;
 use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
 use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Symfony\Component\Console\Command\Command;
@@ -84,7 +84,7 @@ class GenerateCommand extends Command
         /** @var DatabaseManager $databaseManager */
         $databaseManager = $this->container->get('db');
 
-        $code = (new CodeBuilder($this->container, $databaseManager))->build();
+        $code = (new Builder($this->container, $databaseManager))->build();
 
         $logger = $this->container->make('log');
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace MilesChou\Schemarkdown;
+namespace MilesChou\Schemarkdown\Models;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Illuminate\Support\Collection;
 
-class Database
+class Schema
 {
     /**
      * @var string

@@ -1,15 +1,15 @@
 <?php
-/** @var \MilesChou\Schemarkdown\Table $schema */
+/** @var \MilesChou\Schemarkdown\Models\Table $table */
 ?>
-# Table `{{ $schema->database() }}.{{ $schema->table() }}`
+# Table `{{ $table->database() }}.{{ $table->table() }}`
 
-{{ $schema->comment() }}
+{{ $table->comment() }}
 
 ## Columns
 
 | Name | Type | Length | Precision | Not Null | Auto Increment | Default | Comment |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-@foreach($schema->columns() as $column)
+@foreach($table->columns() as $column)
 | {{ $column->getName() }} | {{ $column->getType()->getName() }} | {{ $column->getLength() }} | {{ $column->getPrecision() }} | {{ $column->getNotnull() ? 'true' : 'false' }} | {{ $column->getAutoincrement() ? 'true' : 'false' }} | {{ $column->getDefault() }} | {{ $column->getComment() }} |
 @endforeach
 
@@ -17,6 +17,6 @@
 
 | Name | Columns | Type |
 | --- | --- | --- |
-@foreach($schema->indexes() as $key)
+@foreach($table->indexes() as $key)
 | {{ $key->getName() }} | {{ implode(',', $key->getColumns()) }} | {{ strtoupper($key->type()) }} |
 @endforeach

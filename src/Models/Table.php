@@ -1,12 +1,10 @@
 <?php
 
-namespace MilesChou\Schemarkdown;
+namespace MilesChou\Schemarkdown\Models;
 
 use Doctrine\DBAL\Schema\Column as DoctrineColumn;
 use Doctrine\DBAL\Schema\Index as DoctrineIndex;
 use Doctrine\DBAL\Schema\Table as DoctrineTable;
-use MilesChou\Schemarkdown\Models\Column;
-use MilesChou\Schemarkdown\Models\Index;
 
 class Table
 {
