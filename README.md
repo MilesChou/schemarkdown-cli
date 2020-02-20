@@ -36,7 +36,7 @@ schemarkdown
 
 Schema document are stored to `generated` directory default. Use the `--output-dir` option to change it.
 
-In the other framework, you must provide config file like Laravel. This tool using [`hassankhan/config`](https://github.com/hassankhan/config) to load config file like PHP, JSON, YAML, etc. Use `--config-file` option to specify custom config.
+In the other framework, you must provide config file like Laravel. Use `--config-file` option to specify custom config.
 
 This tool will load `.env` before load config. Use the `--env` option to specify .env path. 
 
