@@ -5,6 +5,7 @@ namespace MilesChou\Schemarkdown\Commands;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Log\LogManager;
+use MilesChou\Codegener\Traits\Path;
 use MilesChou\Codegener\Writer;
 use MilesChou\Schemarkdown\Builder;
 use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
@@ -19,6 +20,7 @@ class GenerateCommand extends Command
 {
     use DatabaseConnection;
     use Environment;
+    use Path;
 
     /**
      * @var Container
@@ -75,9 +77,9 @@ class GenerateCommand extends Command
         $outputDir = $input->getOption('output-dir');
         $overwrite = $input->getOption('overwrite');
 
-        $this->loadDotEnv($this->normalizePath($env));
+        $this->loadDotEnv($this->formatPath($env));
 
-        $connections = $this->normalizeConnectionConfig($this->normalizePath($configFile));
+        $connections = $this->normalizeConnectionConfig($this->formatPath($configFile));
 
         $this->container['config']['database.connections'] = $this->filterConnection($connections, $connection);
 
@@ -92,23 +94,11 @@ class GenerateCommand extends Command
 
         /** @var Writer $writer */
         $writer = $this->container->make(Writer::class);
-        $writer->writeMass($code, $outputDir, $overwrite);
+        $writer->appendBasePath($outputDir)
+            ->writeMass($code, $overwrite);
 
         $logger->info('All document write success');
 
         return 0;
-    }
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    private function normalizePath(string $path): string
-    {
-        if ($path[0] !== '/') {
-            $path = getcwd() . '/' . $path;
-        }
-
-        return $path;
     }
 }

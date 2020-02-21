@@ -114,10 +114,10 @@ class Builder
     private function createRelativePath($connection, $table): string
     {
         if ($this->withConnectionNamespace) {
-            return '/' . Str::snake($connection) . '/' . Str::snake($table) . '.md';
+            return Str::snake($connection) . '/' . Str::snake($table) . '.md';
         }
 
-        return '/' . Str::snake($table) . '.md';
+        return Str::snake($table) . '.md';
     }
 
     /**
@@ -127,9 +127,9 @@ class Builder
     private function createReadmePath($connection): string
     {
         if ($this->withConnectionNamespace) {
-            return '/' . Str::snake($connection) . '/README.md';
+            return Str::snake($connection) . '/README.md';
         }
 
-        return '/README.md';
+        return 'README.md';
     }
 }
