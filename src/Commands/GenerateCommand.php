@@ -4,7 +4,6 @@ namespace MilesChou\Schemarkdown\Commands;
 
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Log\LogManager;
 use MilesChou\Codegener\Traits\Path;
 use MilesChou\Codegener\Writer;
 use MilesChou\Schemarkdown\Builder;
@@ -13,7 +12,6 @@ use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends Command
@@ -38,31 +36,10 @@ class GenerateCommand extends Command
         $this->container = $container;
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        $loggerName = 'schemarkdown';
-
-        $this->container['config']['logging.default'] = $loggerName;
-        $this->container['config']["logging.channels.{$loggerName}"] = [
-            'driver' => $loggerName,
-        ];
-
-        /** @var LogManager $loggerManager */
-        $loggerManager = $this->container->make('log');
-        $loggerManager->extend($loggerName, function () use ($output) {
-            return new ConsoleLogger($output);
-        });
-
-        $loggerManager->setDefaultDriver($loggerName);
-    }
-
     protected function configure()
     {
-        parent::configure();
-
         $this->setName('generate')
             ->setDescription('Generate Markdown')
-            ->addOption('--env', null, InputOption::VALUE_REQUIRED, '.env file', '.env')
             ->addOption('--config-file', null, InputOption::VALUE_REQUIRED, 'Config file', 'config/database.php')
             ->addOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build', null)
             ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'generated')
