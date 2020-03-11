@@ -13,10 +13,10 @@ return (function () {
     $vfs = vfsStream::setup('view');
 
     $container = (new LaravelBridge())
-        ->setupDatabase([])
         ->setupView(dirname(__DIR__) . '/src/templates', $vfs->url())
         ->setupProvider(CodegenerServiceProvider::class)
         ->setupProvider(BaseServiceProvider::class)
+        ->withFacades()
         ->bootstrap();
 
     $app = new IlluminateApplication($container, $container->make('events'), 'dev-master');

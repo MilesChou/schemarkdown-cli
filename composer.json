@@ -23,7 +23,7 @@
         "illuminate/filesystem": "^5.6 | ^6 | ^7",
         "illuminate/log": "^5.6 | ^6 | ^7",
         "illuminate/view": "^5.6 | ^6 | ^7",
-        "laravel-bridge/scratch": "^0.7",
+        "laravel-bridge/scratch": "^1.0",
         "mikey179/vfsstream": "^1.6",
         "mileschou/codegener": "^1.0.2",
         "monolog/monolog": "^1.25 | ^2",
