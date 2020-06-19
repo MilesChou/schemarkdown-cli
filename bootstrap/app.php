@@ -7,7 +7,13 @@ use MilesChou\Schemarkdown\Commands\GenerateCommand;
 use MilesChou\Schemarkdown\Providers\BaseServiceProvider;
 use org\bovigo\vfs\vfsStream;
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+// Fix https://github.com/MilesChou/schemarkdown/issues/2
+$helpers = getcwd() . '/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php';
+if (file_exists($helpers)) {
+    require_once $helpers;
+}
 
 return (function () {
     $vfs = vfsStream::setup('view');
