@@ -2,7 +2,7 @@
 
 namespace Tests\Schemarkdown;
 
-use MilesChou\Schemarkdown\Commands\GenerateCommand;
+use App\Commands\GenerateCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;

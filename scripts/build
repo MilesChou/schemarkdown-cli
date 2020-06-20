@@ -12,9 +12,9 @@ $phar->startBuffering();
 
 $dirPrefix = addcslashes($dir, '/');
 foreach ($extensions as $ext) {
+    $phar->buildFromDirectory($dir, '/' . $dirPrefix . 'app.*\.' . $ext . '$/');
     $phar->buildFromDirectory($dir, '/' . $dirPrefix . 'bin.*\.' . $ext . '$/');
     $phar->buildFromDirectory($dir, '/' . $dirPrefix . 'bootstrap.*\.' . $ext . '$/');
-    $phar->buildFromDirectory($dir, '/' . $dirPrefix . 'src.*\.' . $ext . '$/');
     $phar->buildFromDirectory($dir, '/' . $dirPrefix . 'vendor.*\.' . $ext . '$/');
 }
 

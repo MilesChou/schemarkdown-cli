@@ -1,6 +1,6 @@
 <?php
 
-namespace MilesChou\Schemarkdown\Commands\Concerns;
+namespace App\Commands\Concerns;
 
 use Illuminate\Support\Fluent;
 use RuntimeException;

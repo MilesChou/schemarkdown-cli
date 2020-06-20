@@ -23,7 +23,7 @@ test: clean check
 	phpdbg -qrr vendor/bin/phpunit
 
 analyse:
-	php vendor/bin/phpstan analyse src --level=5
+	php vendor/bin/phpstan analyse app --level=5
 
 coverage: test
 	@if [ "`uname`" = "Darwin" ]; then open build/coverage/index.html; fi

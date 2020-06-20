@@ -1,13 +1,13 @@
 <?php
 
-namespace MilesChou\Schemarkdown\Providers;
+namespace App\Providers;
 
 use Illuminate\Console\Events\ArtisanStarting;
 use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use MilesChou\Schemarkdown\Listeners\BootstrapLogger;
-use MilesChou\Schemarkdown\Listeners\BootstrapVersion;
+use App\Listeners\BootstrapLogger;
+use App\Listeners\BootstrapVersion;
 
 class BaseServiceProvider extends ServiceProvider
 {

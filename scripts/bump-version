@@ -14,11 +14,11 @@ class Bump extends Command
     private static $template = <<<EOL
 <?php
 
-namespace MilesChou\Schemarkdown;
+namespace App;
 
 class Version
 {
-    const VERSION = 'VERSION_PLACEHOLDER';
+    public const VERSION = 'VERSION_PLACEHOLDER';
 }
 
 EOL;
@@ -35,7 +35,7 @@ EOL;
     {
         $version = $input->getArgument('version');
 
-        $filePath = __DIR__ . '/../src/Version.php';
+        $filePath = __DIR__ . '/../app/Version.php';
 
         file_put_contents($filePath, str_replace('VERSION_PLACEHOLDER', $version, static::$template));
 

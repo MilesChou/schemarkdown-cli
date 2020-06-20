@@ -1,14 +1,14 @@
 <?php
 
-namespace MilesChou\Schemarkdown\Commands;
+namespace App\Commands;
 
+use App\Commands\Concerns\DatabaseConnection;
+use App\Commands\Concerns\Environment;
 use Illuminate\Container\Container;
 use Illuminate\Database\DatabaseManager;
 use MilesChou\Codegener\Traits\Path;
 use MilesChou\Codegener\Writer;
 use MilesChou\Schemarkdown\Builder;
-use MilesChou\Schemarkdown\Commands\Concerns\DatabaseConnection;
-use MilesChou\Schemarkdown\Commands\Concerns\Environment;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -41,7 +41,7 @@ class GenerateCommand extends Command
         $this->setName('generate')
             ->setDescription('Generate Markdown')
             ->addOption('--config-file', null, InputOption::VALUE_REQUIRED, 'Config file', 'config/database.php')
-            ->addOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build', null)
+            ->addOption('--connection', null, InputOption::VALUE_REQUIRED, 'Connection name will only build')
             ->addOption('--output-dir', null, InputOption::VALUE_REQUIRED, 'Relative path with getcwd()', 'generated')
             ->addOption('--overwrite', null, InputOption::VALUE_NONE, 'Overwrite the exist file');
     }
@@ -56,14 +56,29 @@ class GenerateCommand extends Command
 
         $this->loadDotEnv($this->formatPath($env));
 
-        $connections = $this->normalizeConnectionConfig($this->formatPath($configFile));
+        $this->container['config']['database.connections'] = $this->normalizeConnectionConfig(
+            $this->formatPath($configFile)
+        );
 
-        $this->container['config']['database.connections'] = $this->filterConnection($connections, $connection);
+        if ($connection === null) {
+            $connections = array_keys($this->container['config']['database.connections']);
+        } else {
+            $connections = [$connection];
+        }
 
+        // Initial connection
         /** @var DatabaseManager $databaseManager */
         $databaseManager = $this->container->get('db');
 
-        $code = (new Builder($this->container, $databaseManager))->build();
+        foreach ($connections as $connection) {
+            $databaseManager->connection($connection);
+        }
+
+        $code = (new Builder(
+            $databaseManager,
+            $this->container->make('view'),
+            $this->container->make('events')
+        ))->build();
 
         $logger = $this->container->make('log');
 

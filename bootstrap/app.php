@@ -1,20 +1,22 @@
 <?php
 
+use App\Commands\GenerateCommand;
+use App\Providers\BaseServiceProvider;
 use Illuminate\Console\Application as IlluminateApplication;
 use LaravelBridge\Scratch\Application as LaravelBridge;
 use MilesChou\Codegener\CodegenerServiceProvider;
-use MilesChou\Schemarkdown\Commands\GenerateCommand;
-use MilesChou\Schemarkdown\Providers\BaseServiceProvider;
+use MilesChou\Schemarkdown\SchemarkdownServiceProvider;
 use org\bovigo\vfs\vfsStream;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-return (function () {
+return (static function () {
     $vfs = vfsStream::setup('view');
 
     $container = (new LaravelBridge())
-        ->setupView(dirname(__DIR__) . '/src/templates', $vfs->url())
+        ->setupViewCompiledPath($vfs->url())
         ->setupProvider(CodegenerServiceProvider::class)
+        ->setupProvider(SchemarkdownServiceProvider::class)
         ->setupProvider(BaseServiceProvider::class)
         ->withFacades()
         ->bootstrap();

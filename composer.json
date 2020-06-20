@@ -1,5 +1,5 @@
 {
-    "name": "mileschou/schemarkdown",
+    "name": "mileschou/schemarkdown-cli",
     "description": "The schema document generator",
     "type": "library",
     "license": "MIT",
@@ -16,29 +16,26 @@
     ],
     "require": {
         "php": ">=7.1",
-        "doctrine/dbal": "^2.6",
         "illuminate/console": "^5.6 | ^6 | ^7",
-        "illuminate/database": "^5.6 | ^6 | ^7",
         "illuminate/events": "^5.6 | ^6 | ^7",
-        "illuminate/filesystem": "^5.6 | ^6 | ^7",
         "illuminate/log": "^5.6 | ^6 | ^7",
-        "illuminate/view": "^5.6 | ^6 | ^7",
-        "laravel-bridge/scratch": "^1.0",
+        "laravel-bridge/scratch": "^1.2",
         "mikey179/vfsstream": "^1.6",
         "mileschou/codegener": "^1.0.2",
+        "mileschou/schemarkdown": "dev-master",
         "monolog/monolog": "^1.25 | ^2",
         "symfony/yaml": "^4 | ^5",
         "vlucas/phpdotenv": "^3"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^7.5",
-        "psy/psysh": "^0.9.12",
+        "phpunit/phpunit": "^7.5 | ^8.5 | ^9",
+        "psy/psysh": "^0.10",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
-            "MilesChou\\Schemarkdown\\": "src"
+            "App\\": "app"
         }
     },
     "autoload-dev": {

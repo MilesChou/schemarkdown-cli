@@ -14,9 +14,9 @@
     <rule ref="PSR12"/>
 
     <!-- Paths and file to check -->
-    <file>src</file>
+    <file>app</file>
     <file>tests</file>
 
-    <exclude-pattern>src/templates</exclude-pattern>
-    <exclude-pattern>src/Version.php</exclude-pattern>
+    <exclude-pattern>app/templates</exclude-pattern>
+    <exclude-pattern>app/Version.php</exclude-pattern>
 </ruleset>

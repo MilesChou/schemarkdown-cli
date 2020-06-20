@@ -1,6 +1,6 @@
 <?php
 
-namespace MilesChou\Schemarkdown\Listeners;
+namespace App\Listeners;
 
 use Illuminate\Console\Events\CommandStarting;
 use LaravelBridge\Scratch\Application;

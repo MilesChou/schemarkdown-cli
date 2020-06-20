@@ -1,9 +1,9 @@
 <?php
 
-namespace MilesChou\Schemarkdown\Listeners;
+namespace App\Listeners;
 
 use Illuminate\Console\Events\ArtisanStarting;
-use MilesChou\Schemarkdown\Version;
+use App\Version;
 
 class BootstrapVersion
 {
