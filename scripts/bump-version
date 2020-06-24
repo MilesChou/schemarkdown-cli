@@ -37,6 +37,8 @@ EOL;
 
         $filePath = __DIR__ . '/../app/Version.php';
 
+        @mkdir(dirname($filePath), 0777, true);
+
         file_put_contents($filePath, str_replace('VERSION_PLACEHOLDER', $version, static::$template));
 
         $output->writeln('>>> Version bump to ' . $version);

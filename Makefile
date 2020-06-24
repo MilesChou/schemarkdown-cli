@@ -2,7 +2,7 @@
 
 INSTALL_PATH := /usr/local/bin/schemarkdown
 
-.PHONY: all clean clean-all check test analyse coverage container sqlite examples
+.PHONY: all clean clean-all check test analyse coverage container bump sqlite examples
 
 # ---------------------------------------------------------------------
 
@@ -33,10 +33,12 @@ container:
 	@docker-compose up -d
 	@docker-compose logs -f
 
-schemarkdown.phar:
+bump:
+	@./scripts/bump-version ${VERSION}
+
+schemarkdown.phar: bump
 	@echo ">>> Building phar ..."
 	@composer install --no-dev --optimize-autoloader --quiet
-	@./scripts/bump-version ${VERSION}
 	@php -d phar.readonly=off ./scripts/build
 	@chmod +x schemarkdown.phar
 	@echo ">>> Build phar finished."

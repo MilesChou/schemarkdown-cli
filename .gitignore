@@ -41,7 +41,7 @@ Desktop.ini
 
 # Artifacts files
 /build
-/generated
+/docs
 /app/Version.php
 /.phpunit.result.cache
 /schemarkdown.phar
