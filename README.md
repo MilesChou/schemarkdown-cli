@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/MilesChou/schemarkdown.svg?branch=master)](https://travis-ci.com/MilesChou/schemarkdown)
 [![codecov](https://codecov.io/gh/MilesChou/schemarkdown/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/schemarkdown)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e858d7ebc494a7db0f3c9a92f40a72e)](https://www.codacy.com/manual/MilesChou/schemarkdown)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4d50659b49da4ce797e7ad1ff5339c78)](https://www.codacy.com/manual/MilesChou/schemarkdown-cli)
 [![Latest Stable Version](https://poser.pugx.org/MilesChou/schemarkdown/v/stable)](https://packagist.org/packages/MilesChou/schemarkdown)
 [![Total Downloads](https://poser.pugx.org/MilesChou/schemarkdown/d/total.svg)](https://packagist.org/packages/MilesChou/schemarkdown)
 [![License](https://poser.pugx.org/MilesChou/schemarkdown/license)](https://packagist.org/packages/MilesChou/schemarkdown)
