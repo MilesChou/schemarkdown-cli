@@ -34,7 +34,6 @@ Desktop.ini
 
 # Compoesr files
 /vendor
-/composer.lock
 
 # Config files
 /phpunit.xml
