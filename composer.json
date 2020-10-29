@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "laravel-bridge/scratch": "^1.5",
+        "laravel-bridge/scratch": "^1.6",
         "mikey179/vfsstream": "^1.6",
         "mileschou/codegener": "^1.2",
         "mileschou/schemarkdown": "^1.0",
