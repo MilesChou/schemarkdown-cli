@@ -39,6 +39,7 @@ Desktop.ini
 /phpunit.xml
 
 # Artifacts files
+/app
 /build
 /docs
 /app/Version.php

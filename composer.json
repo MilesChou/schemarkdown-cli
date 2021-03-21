@@ -15,18 +15,15 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": "^7.2 | ^8.0",
         "laravel-bridge/scratch": "^1.6",
-        "mikey179/vfsstream": "^1.6",
-        "mileschou/codegener": "^1.2",
-        "mileschou/schemarkdown": "^1.0",
+        "mileschou/schemarkdown": "2.0.0-alpha1",
         "monolog/monolog": "^2",
         "symfony/yaml": "^5",
         "vlucas/phpdotenv": "^4"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^9",
+        "phpunit/phpunit": "^8.5 | ^9",
         "psy/psysh": "^0.10",
         "squizlabs/php_codesniffer": "^3.5"
     },

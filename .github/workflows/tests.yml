@@ -1,0 +1,94 @@
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  linux_tests:
+    runs-on: ubuntu-latest
+    env:
+      PGPASSWORD: password
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [ 8.0, 7.4, 7.3, 7.2 ]
+        stability: [ prefer-lowest, prefer-stable ]
+
+    services:
+      mysql:
+        image: mariadb:10
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      postgres:
+        image: postgres:10
+        env:
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Initializing MySQL examples data
+        run: mysql -h127.0.0.1 -uroot -ppassword < ./examples/examples.sql
+
+      - name: Initializing MySQL tests data
+        run: mysql -h127.0.0.1 -uroot -ppassword < ./tests/Fixtures/mysql.sql
+
+      - name: Initializing PostgreSQL tests data
+        run: psql -h 127.0.0.1 -U postgres -d postgres -f tests/Fixtures/postgres.sql
+
+      - name: Initializing SQLite tests data
+        run: sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: Bump the version
+        run: ./scripts/bump-version
+
+      - name: Execute phpcs
+        run: php vendor/bin/phpcs
+
+      - name: Execute tests
+        run: phpdbg -qrr vendor/bin/phpunit
+
+      - name: Execute schema:markdown tests
+        run: php bin/schemarkdown.php schema:markdown --config-file=tests/Fixtures/database.php
+
+      - name: Execute schema:model tests
+        run: php bin/schemarkdown.php schema:model --config-file=tests/Fixtures/database.php
+
+      - name: Code coverage
+        uses: codecov/codecov-action@v1

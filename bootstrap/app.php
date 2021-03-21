@@ -4,7 +4,8 @@ use App\Version;
 use Illuminate\Console\Application as IlluminateApplication;
 use LaravelBridge\Scratch\Application as LaravelBridge;
 use MilesChou\Codegener\CodegenerServiceProvider;
-use MilesChou\Schemarkdown\Console\SchemarkdownCommand;
+use MilesChou\Schemarkdown\Console\SchemaMarkdownCommand;
+use MilesChou\Schemarkdown\Console\SchemaModelCommand;
 use MilesChou\Schemarkdown\SchemarkdownServiceProvider;
 use org\bovigo\vfs\vfsStream;
 
@@ -21,8 +22,8 @@ return (static function () {
         ->bootstrap();
 
     $app = new IlluminateApplication($container, $container->make('events'), Version::VERSION);
-    $app->add(new SchemarkdownCommand());
-    $app->setDefaultCommand('schemarkdown');
+    $app->add(new SchemaMarkdownCommand());
+    $app->add(new SchemaModelCommand());
 
     return $app;
 })();
