@@ -37,6 +37,7 @@
             "Tests\\": "tests"
         }
     },
+    "bin": "schemarkdown",
     "config": {
         "preferred-install": "dist",
         "sort-packages": true
