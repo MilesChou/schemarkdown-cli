@@ -17,7 +17,7 @@
     "require": {
         "php": "^7.2 | ^8.0",
         "laravel-bridge/scratch": "^1.6",
-        "mileschou/schemarkdown": "2.0.0-alpha3",
+        "mileschou/schemarkdown": "^2.0",
         "monolog/monolog": "^2",
         "symfony/yaml": "^5",
         "vlucas/phpdotenv": "^4"

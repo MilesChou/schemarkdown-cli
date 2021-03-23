@@ -85,10 +85,10 @@ jobs:
         run: phpdbg -qrr vendor/bin/phpunit
 
       - name: Execute schema:markdown tests
-        run: php bin/schemarkdown.php schema:markdown --config-file=tests/Fixtures/database.php
+        run: php bin/schemarkdown.php schema:markdown --config=tests/Fixtures/database.php
 
       - name: Execute schema:model tests
-        run: php bin/schemarkdown.php schema:model --config-file=tests/Fixtures/database.php
+        run: php bin/schemarkdown.php schema:model --config=tests/Fixtures/database.php
 
       - name: Code coverage
         uses: codecov/codecov-action@v1
