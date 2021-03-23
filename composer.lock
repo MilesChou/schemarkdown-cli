@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bf6af43cf19419c4ffb8bd6eb5650a8",
+    "content-hash": "cb8bf6e14cb61f7970c3e544de0d50ca",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1034,16 +1034,16 @@
         },
         {
             "name": "mileschou/schemarkdown",
-            "version": "v2.0.0-alpha1",
+            "version": "v2.0.0-alpha3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MilesChou/schemarkdown.git",
-                "reference": "59a9d1950d1f23ccb069a20f19401c01e3d16848"
+                "reference": "425c594b069cbdc43f76c82f866a68f5f26206ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MilesChou/schemarkdown/zipball/59a9d1950d1f23ccb069a20f19401c01e3d16848",
-                "reference": "59a9d1950d1f23ccb069a20f19401c01e3d16848",
+                "url": "https://api.github.com/repos/MilesChou/schemarkdown/zipball/425c594b069cbdc43f76c82f866a68f5f26206ae",
+                "reference": "425c594b069cbdc43f76c82f866a68f5f26206ae",
                 "shasum": ""
             },
             "require": {
@@ -1072,7 +1072,7 @@
                 },
                 "laravel": {
                     "providers": [
-                        "MilesChou\\Schemarkdown\\SchemarkdownServiceProvider"
+                        "InitializeConnectionServiceProvider"
                     ]
                 }
             },
@@ -1100,9 +1100,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MilesChou/schemarkdown/issues",
-                "source": "https://github.com/MilesChou/schemarkdown/tree/v2.0.0-alpha1"
+                "source": "https://github.com/MilesChou/schemarkdown/tree/v2.0.0-alpha3"
             },
-            "time": "2021-03-20T19:15:01+00:00"
+            "time": "2021-03-22T16:58:32+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4923,7 +4923,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3"
+        "php": "^7.2 | ^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
