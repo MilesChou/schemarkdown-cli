@@ -1,0 +1,57 @@
+name: "Release"
+
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  COMPOSER_FLAGS: "--ansi --no-interaction --no-progress --no-suggest --prefer-dist"
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer:v2
+          coverage: none
+
+      - name: Install Box package
+        run: composer global config minimum-stability dev && composer global require humbug/box ${{ env.COMPOSER_FLAGS }}
+
+      - name: Install Composer packages
+        run: composer install --no-dev ${{ env.COMPOSER_FLAGS }}
+
+      - name: Bump the version
+        run: ./bin/bump-version ${{ github.ref }}
+
+      - name: Build phar file
+        run: box compile
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: true
+          body: TODO
+
+      - name: Upload phar
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./schemarkdown.phar
+          asset_name: schemarkdown.phar
+          asset_content_type: application/octet-stream

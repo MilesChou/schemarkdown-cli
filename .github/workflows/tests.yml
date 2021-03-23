@@ -76,7 +76,7 @@ jobs:
           command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
       - name: Bump the version
-        run: ./scripts/bump-version
+        run: ./bin/bump-version
 
       - name: Execute phpcs
         run: php vendor/bin/phpcs

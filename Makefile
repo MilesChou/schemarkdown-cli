@@ -31,7 +31,7 @@ container:
 	@docker-compose logs -f
 
 bump:
-	@./scripts/bump-version ${VERSION}
+	@./bin/bump-version ${VERSION}
 
 schemarkdown.phar: bump
 	@echo ">>> Building phar ..."
