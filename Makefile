@@ -2,7 +2,7 @@
 
 INSTALL_PATH := /usr/local/bin/schemarkdown
 
-.PHONY: all clean clean-all check test analyse coverage container bump sqlite examples
+.PHONY: all clean clean-all check test coverage container bump sqlite examples
 
 # ---------------------------------------------------------------------
 
@@ -35,11 +35,7 @@ bump:
 
 schemarkdown.phar: bump
 	@echo ">>> Building phar ..."
-	@composer install --no-dev --optimize-autoloader --quiet
-	@php -d phar.readonly=off ./scripts/build
-	@chmod +x schemarkdown.phar
-	@echo ">>> Build phar finished."
-	@composer install --dev --quiet
+	@box compile
 
 sqlite:
 	@sqlite3 tests/Fixtures/sqlite.db < tests/Fixtures/sqlite.sql

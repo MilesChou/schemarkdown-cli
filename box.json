@@ -1,0 +1,11 @@
+{
+    "chmod": "0700",
+    "files": [
+        "bin/schemarkdown.php",
+        "bootstrap/app.php"
+    ],
+    "compression": "GZ",
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php"
+    ]
+}

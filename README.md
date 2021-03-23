@@ -60,6 +60,12 @@ Clone this repository and run `make` command:
 make
 ```
 
+Use [Box](https://github.com/box-project/box) to build PHAR file:
+
+```
+box compile
+```
+
 ## Troubleshooting
 
 Use `-vv` option to see info log.
